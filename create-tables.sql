@@ -137,5 +137,5 @@ CREATE TABLE acs_2012_stats (
 );
 
 COPY acs_2012_stats
-FROM 'acs_2012_stats.csv'
+FROM 'data/acs_2012_stats.csv'
 WITH (FORMAT CSV, HEADER, DELIMITER ',');
