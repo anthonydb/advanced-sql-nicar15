@@ -102,7 +102,7 @@ CREATE TABLE counties (
 );
 
 COPY counties
-FROM 'counties.csv'
+FROM 'data/counties.csv'
 WITH (FORMAT CSV, HEADER, DELIMITER ',');
 
 --------------------------------------
@@ -122,7 +122,7 @@ CREATE TABLE meat_poultry_inspect (
 );
 
 COPY meat_poultry_inspect
-FROM 'meat-poultry-inspect.csv'
+FROM 'data/meat-poultry-inspect.csv'
 WITH (FORMAT CSV, HEADER, DELIMITER ',');
 
 --------------------------------------------------
