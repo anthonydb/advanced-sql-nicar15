@@ -1,6 +1,6 @@
--- MATH
+-- DOING MATH
 
--- Basic math
+-- Review of basic math: Run each of these statements separately:
 
 SELECT 2 + 2;
 SELECT 9 - 1;
@@ -10,7 +10,7 @@ SELECT 6 % 4;
 SELECT 3 ^ 4;
 
 
--- Integer vs. Decimal Division
+-- Integer vs. decimal division. Notice 
 
 SELECT 11 / 6;
 SELECT 11.0 / 6;
