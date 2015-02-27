@@ -12,6 +12,11 @@ The code and data examples here were created for the 2015 National Institute for
 
 ## Basic math
 
-We'll start with math review and then move ahead.
+We'll start with math review before moving on.
 
 * Load the `basic-math.sql` script and work through each example.
+
+## Interview and clean data
+
+* Load the `interview-create.sql` script and work through the examples.
+

@@ -1,10 +1,15 @@
--- 1: Backup a Table
+﻿-- INTERVIEW AND CLEAN YOUR DATA
 
--- Method one:
+
+-- Backups!
+-- First, *never* modify your original data. Work on a copy
+-- so you can go back to the original if needed.
+
+-- Backup method one:
 CREATE TABLE meat_poultry_inspect_backup AS
 SELECT * FROM meat_poultry_inspect;
 
--- Method two:
+-- Backup method two:
 SELECT * INTO meat_poultry_inspect_backup
 FROM meat_poultry_inspect;
 
@@ -14,7 +19,11 @@ SELECT COUNT(*) FROM meat_poultry_inspect;
 SELECT COUNT(*) FROM meat_poultry_inspect_backup;
 
 
--- 2: Using MIN() and MAX()
+-- INTERVIEW your data
+
+-- Using the MIN() and MAX() functions on a column
+-- to see what the biggest/smallest values are in it;
+-- useful for finding anomalous data. 
 
 SELECT MIN(company) AS "Min", MAX(company) AS "Max"
 FROM meat_poultry_inspect;
@@ -23,7 +32,8 @@ SELECT MIN(GrantDate) AS "MinDate", MAX(GrantDate) AS "MaxDate"
 FROM meat_poultry_inspect;
 
 
--- 3a: SELECT with LIMIT to return just five records
+-- Take a look at a handful of sorted values with 
+-- SELECT with LIMIT
 
 SELECT GrantDate
 FROM meat_poultry_inspect
@@ -31,7 +41,7 @@ ORDER BY GrantDate ASC
 LIMIT 5;
 
 
--- 3b: SELECT with LIMIT and exclude NULL values
+-- SELECT with LIMIT and exclude NULL values
 
 SELECT GrantDate
 FROM meat_poultry_inspect
@@ -40,8 +50,8 @@ ORDER BY GrantDate DESC
 LIMIT 5;
 
 
--- 4: SELECT with GROUP BY to show unique values
--- Displays unique states
+-- How many states do we have in this data?
+-- SELECT with GROUP BY to show the unique values
 
 SELECT State
 FROM meat_poultry_inspect
@@ -49,25 +59,25 @@ GROUP BY State
 ORDER BY State;
 
 
--- 5a: SELECT with COUNT() to count unique values
+-- How many of each state do we have in this data?
+-- SELECT with COUNT() to count unique states
 
--- Group and count states
-SELECT State, COUNT(State) AS "ct"
+SELECT State, COUNT(State) AS "ct" -- name the column with an alias
 FROM meat_poultry_inspect
 GROUP BY State
 ORDER BY COUNT(State) DESC;
 
 
--- 5b: SELECT with COUNT() to find inconsistencies
+-- Are company names entered consistently?
+-- SELECT with COUNT() to find inconsistencies
 
--- Group and count company names to find inconsistencies
 SELECT Company, COUNT(Company) AS "ct"
 FROM meat_poultry_inspect
 GROUP BY Company
 ORDER BY Company ASC;
 
 
--- 6: Use GROUP BY on multiple columns
+-- Use GROUP BY on multiple columns
 
 SELECT Company, Street, City, COUNT(Company)
 FROM meat_poultry_inspect
@@ -75,7 +85,8 @@ GROUP BY Company, Street, City
 ORDER BY Company, Street, City;
 
 
--- 7: Using LENGTH() and COUNT() to test the ZIP field
+-- Are the zip codes in good shape?
+-- Use LENGTH() and COUNT() to test the ZIP field
 
 SELECT LENGTH(ZIP), COUNT(LENGTH(ZIP))
 FROM meat_poultry_inspect
@@ -83,7 +94,7 @@ GROUP BY LENGTH(ZIP)
 ORDER BY LENGTH(ZIP) ASC;
 
 
--- 8: Using LENGTH() to find short ZIP fields
+-- Use LENGTH() to find short ZIP fields
 
 SELECT Company, City, State, ZIP
 FROM meat_poultry_inspect
@@ -98,19 +109,22 @@ GROUP BY Company, City, State, ZIP
 ORDER BY State, City, Company ASC;
 
 
--- 9: Add a column with ALTER TABLE
+-- CLEAN your data!
+
+-- Let's copy a column to a new column as a further backup.
+-- Add a column with ALTER TABLE
 
 ALTER TABLE meat_poultry_inspect ADD COLUMN Company_copy varchar(50);
 
 
--- 10: View the added column
+-- View the added column, which is empty
 
 SELECT Company, Company_copy 
 FROM meat_poultry_inspect 
 ORDER BY Company;
 
 
--- 11 Copy field values with UPDATE
+-- Copy the original field values into the new field with UPDATE
 
 UPDATE meat_poultry_inspect
 SET Company_copy = Company;
@@ -120,7 +134,9 @@ SELECT Company, Company_copy
 FROM meat_poultry_inspect 
 ORDER BY Company;
 
--- 12: UPDATE field values that match a string
+
+-- Let's make one company's name consistent and
+-- UPDATE field values that match a string
 
 UPDATE meat_poultry_inspect
 SET Company = 'Armour-Eckrich Meats'
@@ -130,7 +146,9 @@ SELECT Company, Company_copy
 FROM meat_poultry_inspect 
 WHERE Company ILIKE '%armour%';
 
--- 13: Select Connecticut plants, zip codes
+
+-- Let's fix some of the zip codes. 
+-- For example, Connecticut's are missing the leading zero
 
 SELECT Company, City, State, ZIP
 FROM meat_poultry_inspect
@@ -138,7 +156,7 @@ WHERE State = 'CT'
 ORDER BY State, City, Company ASC;
 
 
--- 14: Prepare table for modifying zip field
+-- Let's create another backup new column and fill it
 
 ALTER TABLE meat_poultry_inspect ADD COLUMN Zip_copy varchar(10);
 
@@ -149,7 +167,7 @@ SET Zip_copy = Zip;
 -- 15: UPDATE zip codes missing a leading zero
 
 UPDATE meat_poultry_inspect
-SET Zip = '0' || Zip
+SET Zip = '0' || Zip -- concatenate!
 WHERE State = 'CT';
 
 SELECT Zip, Zip_copy
@@ -157,7 +175,7 @@ FROM meat_poultry_inspect
 WHERE State = 'CT';
 
 
--- 16: Concatenate several fields
+-- Bonus: concatenating fields can be useful for output
 
 SELECT Company || ', ' || City || ', ' || State AS "Combined_Name"
 FROM meat_poultry_inspect

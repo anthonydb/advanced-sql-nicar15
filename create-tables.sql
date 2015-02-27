@@ -1,4 +1,4 @@
--- Create Table for Census 2010 PL94 Import
+﻿-- Create Table for Census 2010 PL94 Import
 -- Full data dictionary available at: http://www.census.gov/prod/cen2010/doc/pl94-171.pdf
 
 CREATE TABLE counties (
@@ -107,6 +107,7 @@ WITH (FORMAT CSV, HEADER, DELIMITER ',');
 
 --------------------------------------
 -- Import USDA Meat/Poultry Plant List
+-- http://catalog.data.gov/dataset/meat-poultry-and-egg-inspection-directory-by-establishment-number
 
 CREATE TABLE meat_poultry_inspect (
     EstNumber varchar(50), 
