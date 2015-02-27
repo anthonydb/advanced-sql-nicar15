@@ -88,7 +88,7 @@ VALUES
 );
 
 -- Calculate the rate
-
+	
 SELECT 
     City,
     Population,

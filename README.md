@@ -28,3 +28,8 @@ Journalists generally like to discover which X is (highest/most/smallest/least/e
 
 * Load the `ranks-rates.sql` script to work the examples.
 
+## Statistical functions
+
+PostgreSQL can't match the power of R, Pandas or even Excel for stats, but a few built-in functions can give you a quick read on your data.
+
+* For examples, load the `stats-functions.sql` script.
