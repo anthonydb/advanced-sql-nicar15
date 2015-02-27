@@ -1,30 +1,35 @@
--- DOING MATH
+﻿-- DOING MATH
 
--- Review of basic math: Run each of these statements separately:
+-- Quick review of basic math operators: Run each of these statements separately:
 
 SELECT 2 + 2;
 SELECT 9 - 1;
 SELECT 3 * 4;
 SELECT 12 / 3;
-SELECT 6 % 4;
-SELECT 3 ^ 4;
+SELECT 6 % 4; -- modulo
+SELECT 3 ^ 4; -- power
 
 
--- Integer vs. decimal division. Notice 
+-- Integer vs. decimal division. Notice what happens when you
+-- divide two integers? Providing one of the inputs as a decimal
+-- forces a decimal result.
 
 SELECT 11 / 6;
 SELECT 11.0 / 6;
 
+-- You also can CAST an integer as a decimal
 SELECT CAST (11 AS DECIMAL(5,1)) / 6;
 
 
--- Order of operations
+-- Order of operations. You learned this 
+-- in elementary school, but it's worth reviewing.
 
 SELECT 2 + 3 * 4;   -- answer: 14
 SELECT (2 + 3) * 4; -- answer: 20
 
 
--- Examine Census race columns
+-- Let's do some math on Census data. Here are the population counts
+-- in each column tabulating race in the 2010 Census by county:
 
 SELECT CtyName,
        STUSAB,
@@ -39,7 +44,8 @@ SELECT CtyName,
 FROM counties;
 
 
--- Check race column totals
+-- Let's check that our race column totals add up
+-- to the total population field:
 
 SELECT 
 CtyName, 
@@ -52,7 +58,9 @@ P0010003 + P0010004 + P0010005 + P0010006 + P0010007
 FROM Counties;
 
 
--- Calculate percent Asian (percent of the whole)
+-- Now, let's calculate for each county the percent of the
+-- population that's Asian (percent of the whole). We'll sort the
+-- table for good measure.
 
 SELECT CtyName,
        STUSAB,
@@ -61,7 +69,9 @@ FROM Counties
 ORDER BY (CAST (P0010006 AS DECIMAL(10,1)) / P0010001) DESC;
 
 
--- Calculate percent change
+-- Calculate percent change. You know how to do this, right?
+-- Let's create a table, insert some values and then check
+-- the percent change.
 
 CREATE TABLE PercentChangeCalc (
     department varchar(20),
@@ -78,14 +88,14 @@ VALUES
     ('Library', 250000, 223000),
     ('Recreation', 199000, 195000);
 
+-- Here's the calculation. Notice we're using the ROUND function.
 SELECT Department,
        spend_2010,
        spend_2014,  
        ROUND( (CAST (spend_2014 AS DECIMAL(10,1)) - spend_2010) / spend_2010 * 100, 1 )
 FROM PercentChangeCalc;
 
-
--- SUM() and AVG() in action
+-- Sums and averages using the SUM() and AVG() functions
 
 SELECT SUM(P0010001),
        AVG(P0010001)
