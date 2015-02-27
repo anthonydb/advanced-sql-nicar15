@@ -1,4 +1,10 @@
--- The RANK() and DENSE_RANK() functions
+﻿-- RANKINGS and RATES
+
+-- PostgreSQL has a couple of ranking functions that create
+-- different results. Let's check them out:
+
+
+-- First, create a table and fill with some dummy data
 
 CREATE TABLE widgets (
     company varchar(30),
@@ -14,7 +20,11 @@ VALUES
     ('District Widget Inc.', 201000),
     ('Clarke Industries', 620000),
     ('Stavesacre Industries', 244000),
-    ('Bowers Widgets', 201000);
+    ('Roanoke Widgets', 201000);
+
+
+-- The RANK() and DENSE_RANK() functions
+-- Notice what's different?
 
 SELECT company, widget_output, 
 RANK() OVER (ORDER BY widget_output DESC),
@@ -22,8 +32,9 @@ DENSE_RANK() OVER (ORDER BY widget_output DESC)
 FROM widgets;
 
 
--- RANK() within groups
+-- Now, let's rank within groups using PARTITION
 
+-- First, create a table and insert some dummy data
 CREATE TABLE store_sales (
     store varchar(30),
     category varchar(30),
@@ -47,7 +58,7 @@ RANK() OVER (PARTITION BY store ORDER BY sales DESC)
 FROM store_sales;
 
 
--- Use a self-join to show just the No. 1 ranks
+-- Use a self-join to show just the No. 1 category in each store
 
 SELECT *
 FROM
@@ -56,8 +67,10 @@ FROM
     FROM store_sales) AS a
 WHERE a.Rank = 1;
 
+-- Rates!
 
--- Calculating murder rate per 100,000 people
+-- Calculating the murder rate per 100,000 people:
+-- Again, create a dummy table, albeit with some real data
 
 CREATE TABLE murder_rate (
     City varchar(25),
@@ -73,6 +86,8 @@ VALUES
     ('Boston', 630648, 57),
     ('Miami', 414327, 69) 
 );
+
+-- Calculate the rate
 
 SELECT 
     City,

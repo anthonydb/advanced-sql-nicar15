@@ -18,5 +18,13 @@ We'll start with math review before moving on.
 
 ## Interview and clean data
 
+This segment covers how to check your data for problems and how to clean it up safely.
+
 * Load the `interview-create.sql` script and work through the examples.
+
+## Creating ranks and rates
+
+Journalists generally like to discover which X is (highest/most/smallest/least/etc.). Here's how to do that with SQL.
+
+* Load the `ranks-rates.sql` script to work the examples.
 
