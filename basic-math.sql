@@ -103,6 +103,7 @@ FROM counties;
     
 
 -- Create a MEDIAN() function
+-- Via https://wiki.postgresql.org/wiki/Aggregate_Median
 
 CREATE OR REPLACE FUNCTION _final_median(anyarray)
    RETURNS float8 AS
